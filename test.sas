@@ -18,7 +18,7 @@ endrsubmit;
 rsubmit;
 data names;
 set comp.names;
-where year2 in (.,2019,2020);
+where year2 in (.,2019,2020);  /* select only firms active in 2019 and 2020 */
 run;
 proc download data=names out=data.names; run;
 endrsubmit;
