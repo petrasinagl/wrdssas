@@ -1,4 +1,4 @@
-%let path = C:\Users\andrlikova\Dropbox\Test Project\SAS\;
+%let path = C:\Users\andrlikova\Dropbox\Test\SAS\;   /* change this to reflect your directory */
 
 libname data "&path.Data";
 libname out "&path.Out";
@@ -7,7 +7,6 @@ libname out "&path.Out";
 signon wrds username = _prompt_;
 
 /* Download Compustat Data */
-
 rsubmit;
 data comp_data_test;
 set compd.secd;
@@ -25,4 +24,14 @@ proc download data=names out=data.names; run;
 endrsubmit;
 
 /* Upload Your Data to WRDS Cloud */
+rsubmit; 
+proc upload data=data.test out=test; run;
+endrsubmit;
 
+
+
+
+
+
+/* When finished -> Log out of WRDS */
+signoff;
