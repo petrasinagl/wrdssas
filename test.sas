@@ -28,10 +28,11 @@ rsubmit;
 proc upload data=data.test out=test; run;
 endrsubmit;
 
-
-
-
-
-
 /* When finished -> Log out of WRDS */
 signoff;
+
+/* Export Data in CSV Format */
+proc export data= out.comp_data_test
+	outfile= "&path.Out\comp_data_test.csv" replace
+	dbms=CSV replace;
+run;
