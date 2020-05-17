@@ -9,8 +9,8 @@ signon wrds username = _prompt_;
 /* Download Compustat Data */
 rsubmit;
 data comp_data_test;
-set compd.secd;
-where  exchg in (11,12,14) and tpci eq "0" year(datadate) ge 2020 and and month(datadate) eq 5;
+set compd.secd(obs=1000);
+where  exchg in (11,12,14) and tpci eq "0" and year(datadate) eq 2020 and month(datadate) eq 5;
 run;
 proc download data=comp_data_test out=data.comp_data_test; run;
 endrsubmit;
@@ -28,7 +28,7 @@ rsubmit;
 proc upload data=data.test out=test; run;
 endrsubmit;
 
-/* When finished -> Log out of WRDS */
+/* When finished -> Sign off WRDS */
 signoff;
 
 /* Export Data in CSV Format */
