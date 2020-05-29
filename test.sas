@@ -24,22 +24,28 @@ proc download data=names out=data.names; run;
 endrsubmit;
 
 /* Upload Your Data to WRDS Cloud */
+proc sql;
+	create table data.upload_gvkey as 
+		select distinct gvkey 
+        from data.comp_data_test;
+quit;
+
 rsubmit; 
-proc upload data=data.test out=test; run;
+proc upload data=data.upload_gvkey out=upload_gvkey; run;
 endrsubmit;
 
 /* When finished -> Sign off WRDS */
 signoff;
 
 /* Export Data in CSV Format */
-proc export data= out.comp_data_test
+proc export data= data.comp_data_test
 	outfile= "&path.Out\comp_data_test.csv" replace
 	dbms=CSV replace;
 run;
 
 /* Run Python Code */
 
-/* This code downloads Treasury Bill data from the US Department of Treasury (real-time) */
+/* This code downloads Treasury Bill data from the US Department of Treasury (real-time) and saves into 'rf_new.csv' */
 data _null_;
     infile "python &path.Script\scrape.py &path.Data\rf_new.csv" pipe;
     input;
